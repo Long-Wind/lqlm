@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_240"
+    xmlns:cst="http://schemas.android.com/apk/res-auto">
+
+        <com.projectpractice.lqlm.ui.custom.AutoLoopViewPager
+            android:id="@+id/looper_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            cst:duration="4500"/>
+
+        <LinearLayout
+            android:id="@+id/looper_point_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+</RelativeLayout>
