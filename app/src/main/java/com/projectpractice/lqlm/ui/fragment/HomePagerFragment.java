@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.projectpractice.lqlm.ui.activity.TicketActivity;
 import com.projectpractice.lqlm.ui.adapter.HomePagerContentListAdapter;
 import com.projectpractice.lqlm.ui.adapter.LooperPagerAdapter;
 import com.projectpractice.lqlm.ui.custom.AutoLoopViewPager;
+import com.projectpractice.lqlm.ui.custom.MyNestedScrollView;
 import com.projectpractice.lqlm.utils.Constants;
 import com.projectpractice.lqlm.utils.DensityUtil;
 import com.projectpractice.lqlm.utils.PresenterManager;
@@ -50,7 +53,10 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     private AutoLoopViewPager looperPager;
     private LooperPagerAdapter looperPagerAdapter;
     private LinearLayout looperPointContainer;
-    private SmartRefreshLayout homePagerRefresh;
+    private LinearLayout homePageParent;
+    private RelativeLayout nestedScrollHeader;
+    private MyNestedScrollView myNestedScroll;
+        private SmartRefreshLayout homePagerRefresh;
 
     public static HomePagerFragment newInstance(Category.DataBean category) {
         HomePagerFragment homePagerFragment = new HomePagerFragment();
@@ -72,6 +78,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         contentList = binding.homePagerContentList;
         looperPager = binding.looperPager;
         looperPointContainer = binding.looperPointContainer;
+        homePageParent = binding.homePageParent;
+        nestedScrollHeader = binding.nestedScrollHeader;
+        myNestedScroll = binding.myNestedScroll;
         homePagerRefresh = binding.homePagerRefresh;
         contentList.setLayoutManager(new LinearLayoutManager(getContext()));
         contentList.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -107,6 +116,19 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
+        homePageParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int measuredHeight = homePageParent.getMeasuredHeight();
+                myNestedScroll.setHeaderHeight(nestedScrollHeader.getMeasuredHeight());
+                ViewGroup.LayoutParams layoutParams = contentList.getLayoutParams();
+                layoutParams.height = measuredHeight;
+                if (measuredHeight != 0) {
+                    homePageParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
+
         looperPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -269,12 +291,12 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     private void handleItemClick(HomePagerContent.DataBean item) {
         ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
-        ticketPresenter.getTicket(item.getTitle(),item.getClick_url(),item.getPict_url());
+        ticketPresenter.getTicket(item.getTitle(), item.getClick_url(), item.getPict_url());
         Intent intent = new Intent(getContext(), TicketActivity.class);
-        intent.putExtra("volume",item.getVolume());
-        intent.putExtra("title",item.getTitle());
-        intent.putExtra("coupon_amount",item.getCoupon_amount());
-        intent.putExtra("original_price",item.getZk_final_price());
+        intent.putExtra("volume", item.getVolume());
+        intent.putExtra("title", item.getTitle());
+        intent.putExtra("coupon_amount", item.getCoupon_amount());
+        intent.putExtra("original_price", item.getZk_final_price());
         startActivity(intent);
     }
 }

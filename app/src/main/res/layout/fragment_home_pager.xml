@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cst="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_page_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:cst="http://schemas.android.com/apk/res-auto"
     android:background="#EFEEEE"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/home_pager_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:id="@+id/home_pager_refresh"
+        <com.projectpractice.lqlm.ui.custom.MyNestedScrollView
+            android:id="@+id/my_nested_scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -21,6 +23,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/nested_scroll_header"
                     android:layout_width="match_parent"
                     android:layout_height="240dp">
 
@@ -47,11 +50,11 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <com.scwang.smart.refresh.footer.BallPulseFooter
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+        </com.projectpractice.lqlm.ui.custom.MyNestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+        <com.scwang.smart.refresh.footer.BallPulseFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
