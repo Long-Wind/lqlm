@@ -2,6 +2,8 @@ package com.projectpractice.lqlm.model;
 
 import com.projectpractice.lqlm.model.entity.Category;
 import com.projectpractice.lqlm.model.entity.HomePagerContent;
+import com.projectpractice.lqlm.model.entity.SearchRecommend;
+import com.projectpractice.lqlm.model.entity.SearchResult;
 import com.projectpractice.lqlm.model.entity.SelectedContent;
 import com.projectpractice.lqlm.model.entity.SelectedPageCategory;
 import com.projectpractice.lqlm.model.entity.TicketParams;
@@ -30,4 +32,10 @@ public interface Api {
 
     @GET("recommend/categoryId")
     Call<SelectedContent> getSelectedPageContent(@Query("categoryId") int categoryId);
+
+    @GET("search/recommend")
+    Call<SearchRecommend> getRecommendWords();
+
+    @GET("search")
+    Call<SearchResult> doSearch(@Query("page") int page, @Query("keyword") String keyword);
 }

@@ -12,7 +12,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     protected View getRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_search,container,false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         return view;
     }
 }
